@@ -12,6 +12,8 @@ function site_url()
     return null;
 }
 
+
+/**oi */
 /**
  * Dump and Die : debugar codigo interrompendo a execução.
  */
