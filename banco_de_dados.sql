@@ -7,7 +7,7 @@ CREATE TABLE pessoa (
     uf varchar(255),
     cidade varchar(255),
     PRIMARY KEY (id)
-)
+);
 
 CREATE TABLE uf (
     id int NOT NULL AUTO_INCREMENT,
