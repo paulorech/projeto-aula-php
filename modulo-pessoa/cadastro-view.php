@@ -1,12 +1,5 @@
 <?php
 
-$listaUfs = [
-	'RS' => 'Rio Grande do Sul',
-	'SC' => 'Santa Catarina',
-	'PR' => 'Paraná',
-];
-
-
 $listaCidades = [
 	'RS' => [
 		'Caxias do Sul',
@@ -159,8 +152,8 @@ $listaCidades = [
 								<option value="">Selecione um estado</option>
 								<?php
 								// ForEach
-								foreach ($listaUfs as $key => $uf) {
-									echo "<option value=\"" . $key . "\">" . $uf . "</option>";
+								foreach ($listaUf as $uf) {
+									echo "<option value=\"" . $uf->id . "\">" . $uf->nome . "</option>";
 								}
 
 								// For tradicional
