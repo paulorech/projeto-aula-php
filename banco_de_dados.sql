@@ -14,13 +14,14 @@ CREATE TABLE uf (
     nome varchar(255),
     sigla varchar(2) NOT NULL,
     PRIMARY KEY (id)
-)
+);
 
 CREATE TABLE cidade (
     id int NOT NULL AUTO_INCREMENT,
     nome varchar(255),
-    sigla varchar(255) NOT NULL,
-    PRIMARY KEY (id)
+    uf_id int NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (uf_id) REFERENCES uf(id)
 );
 
 INSERT INTO uf (nome, sigla) VALUES ('Acre', 'AC'); 
@@ -51,4 +52,9 @@ INSERT INTO uf (nome, sigla) VALUES ('São Paulo', 'SP');
 INSERT INTO uf (nome, sigla) VALUES ('Sergipe', 'SE');
 INSERT INTO uf (nome, sigla) VALUES ('Tocantins', 'TO');
 
+ALTER TABLE cidade ADD column uf_id int not NULL;
+alter table cidade ADD FOREIGN KEY cidade_uf_id (uf_id) REFERENCES uf (id);
 
+insert into cidade (nome, uf_id) VALUES ('Caxias do Sul', '21');
+insert into cidade (nome, uf_id) VALUES ('Farroupilha', '21');
+insert into cidade (nome, uf_id) VALUES ('Vacaria', '21');
