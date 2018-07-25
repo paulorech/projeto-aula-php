@@ -1,2 +1,2 @@
 # projeto-aula-php
-Projeto da aual de PHP na Flexxo
+Projeto da aula de PHP na Flexxo

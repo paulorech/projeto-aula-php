@@ -12,8 +12,6 @@ function site_url()
     return null;
 }
 
-
-/**oi */
 /**
  * Dump and Die : debugar codigo interrompendo a execução.
  */
@@ -26,7 +24,7 @@ function dd($valor)
 }
 
 /**
- * Dump: debugar codigo sem interromper o processo.
+ * Dump: debugar codigo sem interromper o processo.TESTE
  */
 function d($valor)
 {

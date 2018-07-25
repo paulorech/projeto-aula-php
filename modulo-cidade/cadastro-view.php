@@ -1,23 +1,3 @@
-<?php
-
-
-$listaCidades = [
-	'RS' => [
-		'Caxias do Sul',
-		'Porto Alegre',
-	],
-	'SC' => [
-		'Florianópolis',
-		'Lages'
-	],
-	'PR' => [
-		'Curitiba',
-		'Cascavel',
-	]
-];
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,8 +56,9 @@ $listaCidades = [
             </ul>
         </div>
     </nav>
-    <?php /* FIM MENU PRINCIPAL */ ?>
+<?php /* FIM MENU PRINCIPAL */ ?>
 
+<?php /* INICIO CONTEUDO */ ?>
 <div class="content-wrapper">
 	<div class="container-fluid">
 
@@ -90,18 +71,17 @@ $listaCidades = [
 
 	<div class="card">
 		<div class="card-header">
-        	<i class="fa fa-user"></i> Cadastro de Pessoa
+        	<i class="fa fa-user"></i> Cadastro de Cidades
 		</div>
 
 		<div class="card-body">
-
-			<form action="<?php echo $SITE_URL . "/modulo-pessoa/cadastro-pessoa.php"; ?>" id="form-cadastro" method="POST">
-
+			<form action="<?php echo $SITE_URL . "/modulo-cidade/cadastro-cidade.php"; ?>" id="form-cadastro" method="POST">
+		<?php /* echo @$SITE_URL*/ ?>
 				<div class="form-group">
 					<div class="form-row ">
-						<div class="col-md-6">
-							<label for="nome">Nome completo</label>
-							<input class="form-control" name="nome" id="nome" placeholder="Nome completo" type="text" />
+						<div class="col-md-8">
+							<label for="nome">Nome</label>
+							<input class="form-control" name="nome" id="nome" placeholder="Nome da cidade" type="text" />
 							<?php
 							/* Validação do input nome (este codigo foi passado para a função exibirErro) */
 							if ( isset($listaErros['nome']) && $listaErros['nome'] ) {
@@ -111,43 +91,7 @@ $listaCidades = [
 							}
 							?>
 						</div>
-						<div class="col-md-6">
-							<label for="email">Email</label>
-							<input class="form-control" name="email" id="email" placeholder="Email" type="text" />
-							<?php echo exibirErro($listaErros, 'email'); ?>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="form-row">
-						<div class="col-md-6">
-							<label>Sexo</label>
-							<div class="radio">
-								<label>
-									<input name="sexo" id="sexo_masculino" value="M" type="radio"> Masculino
-									Masculino
-								</label>
-							</div>
-							<div class="radio">
-								<label>
-									<input name="sexo" id="sexo_feminino" value="F" type="radio"> Feminino
-									Feminino
-								</label>
-							</div>
-							<?php echo exibirErro($listaErros, 'sexo'); ?>
-						</div>
-						<div class="col-md-6">
-							<label for="data_nascimento">Data de Nascimento</label>
-							<input class="form-control" name="data_nascimento" id="data_nascimento" placeholder="__/__/____" type="text" />
-							<?php echo exibirErro($listaErros, 'data_nascimento'); ?>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="form-row">
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<label for="uf">Estado</label>
 							<select class="form-control" name="uf" id="uf" >
 								<option value="">Selecione um estado</option>
@@ -165,39 +109,33 @@ $listaCidades = [
 							</select>
 							<?php echo exibirErro($listaErros, 'uf'); ?>
 						</div>
-						<div class="col-md-6">
-							<label for="cidade">Cidade</label>
-							<select class="form-control" name="cidade" id="cidade">
-								<option value="">Selecione uma cidade</option>
-								<?php
-								foreach($listaCidades as $siglaUf => $listaNomesCidades) {
-
-									foreach($listaNomesCidades as $nomeCidade) {
-										echo "<option value='$nomeCidade'  data-uf='$siglaUf'>" . $nomeCidade . "</option>";
-									}
-
-								}
-								?>
-							</select>
-							<?php echo exibirErro($listaErros, 'cidade'); ?>
-						</div>
 					</div>
 				</div>
-					
 				<div class="form-group">
 					<div class="form-row">
 						<div class="col-md-12">
 							<button class="btn btn-success" type="submit">Salvar</button>
+							
+							<?php if (isset($mensagemSucesso) && $mensagemSucesso) { ?>
+								<span class="text-success"> <?php echo $mensagemSucesso; ?> </span>
+							<?php } ?>
+							<?php
+								if (isset($mensagemErro) && $mensagemErro){
+									echo '<span class = "text-danger">'. $mensagemErro .'</span>';
+								}
+							?>
 						</div>
+
 					</div>
 				</div>
-				
 			</form>
 		</div>
-
 	</div>
 </div>
+<?php /* FIM CONTEUDO */ ?>
 
+
+<?php /* INICIO RODAPE */ ?>
 <footer class="sticky-footer">
 	<div class="container">
 		<div class="text-center">
@@ -205,35 +143,15 @@ $listaCidades = [
 		</div>
 	</div>
 </footer>
+<?php /* FIM RODAPE */ ?>
 
-<!-- Modal -->
-<div class="modal fade" id="modalRemover" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="modalRemoverTitle">Remover registro</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			</div>
-			<div class="modal-body">
-
-			</div>
-			<div class="modal-footer">
-				<form method="post" class="modal-form" action="">
-					<input type="hidden" name="id" class="input-id" value="" />
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-					<button type="submit" class="btn btn-danger btn-remover">Sim, remover</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-
-
+<?php /* INICIO SCRIPTS ADICIONAIS */ ?>
 <script src="<?php echo $SITE_URL . "/static/vendor/jquery/jquery.min.js"; ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/vendor/bootstrap/js/bootstrap.bundle.min.js"; ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/vendor/jquery-easing/jquery.easing.min.js"; ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 <script src="<?php echo $SITE_URL . "/static/js/sb-admin.min.js"; ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/js/home.js"; ?> "></script>
-	
+<?php /* FIM SCRIPTS ADICIONAIS */ ?>	
+
 </body>

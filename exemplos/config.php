@@ -10,8 +10,7 @@ ini_set('display_startup_erros', 1);
 error_reporting(E_ALL);
 
 
-$SITE_URL = 'http://localhost/meu-site';
-
+$SITE_URL = 'http://aula.com';
 ?>
 
 
