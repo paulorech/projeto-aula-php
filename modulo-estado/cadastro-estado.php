@@ -9,6 +9,15 @@ function exibirErro($listaErros, $chave)
     return '';
 }
 
+function validarSigla($sigla) {
+
+$padrao = "/^([a-zA-Z]{2})$/";
+if (preg_match($padrao, $sigla)) {
+    return true;
+}
+return false;
+}
+
 /**
  * Valida formulario simples
  */
@@ -26,11 +35,9 @@ function validarFormularioSimples($post)
         $listaErros['sigla'] = "Informe a sigla do Estado.";
     } 
     
-    else if (strlen($post['sigla']) != 2) {
+    else if (!validarSigla($post['sigla']) ) {
         $listaErros['sigla'] = "Informe uma sigla com 2 caracteres.";
    }
-
-   
     return $listaErros;
 }
 
@@ -49,10 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (count($listaErros) > 0) {
         include "cadastro-view.php";
      }else {
-
+        $sigla = strtoupper ($_POST['sigla']);
         //dd($_POST); //Teste para ver o que está enviando
         $sql = "INSERT INTO uf (nome,sigla) 
-        VALUES('{$_POST['nome']}', '{$sigla['sigla']};";
+        VALUES('{$_POST['nome']}', '{$sigla}');";
 
         //dd($sql); // Teste para ver o resultado do SQL que será enviado.
 
@@ -63,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
             
         if ($estadoId) {
-            $mensagemSucesso= "Estado Cadastrado com Sucesso";
+            $mensagemSucesso= "Estado cadastrado com sucesso";
         } else{
             $mensagemErro = "Erro Inesperado";
         }

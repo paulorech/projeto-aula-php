@@ -30,7 +30,7 @@ function connect_db()
 }
 
 function error_db($e) {
-    echo '<pre>' . $sql . "<br>" . $e->getMessage() . '</pre>';
+    echo '<pre>' . $e . "<br>" . $e->getMessage() . '</pre>';
 }
 
 /**
