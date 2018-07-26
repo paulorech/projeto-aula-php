@@ -14,7 +14,8 @@ include "../comum/migalhas.php"
         <tr>
             <th>ID</th>
             <th>Nome</th>
-            <th>UF_ID</th>
+            <th>Estado</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,10 @@ include "../comum/migalhas.php"
             <td><?php echo $cidade->cidade_id; ?></td>
             <td><?php echo $cidade->cidade_nome; ?></td>
             <td><?php echo "{$cidade->uf_nome} ({$cidade->uf_sigla})"; ?></td>
+            <td><button class="btn btn-primary">Editar </button>
+                <button class="btn btn-danger">
+                <i class="fa fa-fw fa-close"></i> </button>
+            </td>
         </tr>
         <?php } ?>
     </tbody>
