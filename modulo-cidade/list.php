@@ -12,7 +12,6 @@ include "../comum/migalhas.php"
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>ID</th>
             <th>Nome</th>
             <th>Estado</th>
             <th>Ações</th>
@@ -21,11 +20,10 @@ include "../comum/migalhas.php"
     <tbody>
     <?php foreach($listaCidades as $cidade) {?>
         <tr>
-            <td><?php echo $cidade->cidade_id; ?></td>
             <td><?php echo $cidade->cidade_nome; ?></td>
             <td><?php echo "{$cidade->uf_nome} ({$cidade->uf_sigla})"; ?></td>
             <td><button class="btn btn-primary">Editar </button>
-                <button class="btn btn-danger">
+                <button class="btn btn-danger" onclick="deletarRegistro(<?php echo $cidade->cidade_id;?>);">
                 <i class="fa fa-fw fa-close"></i> </button>
             </td>
         </tr>
