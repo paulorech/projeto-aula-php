@@ -2,16 +2,14 @@
 /**
  * Funções úteis do projeto.
  */
-
 /**
  * Retorna a URL raiz do site atual;
  * 
  */
 function site_url()
 {
-    return null;
+    return $SITE_URL;
 }
-
 /**
  * Dump and Die : debugar codigo interrompendo a execução.
  */
@@ -22,9 +20,8 @@ function dd($valor)
     echo '</pre>';
     die;
 }
-
 /**
- * Dump: debugar codigo sem interromper o processo.TESTE
+ * Dump: debugar codigo sem interromper o processo.
  */
 function d($valor)
 {
@@ -32,21 +29,28 @@ function d($valor)
     var_dump($valor);
     echo '</pre>';
 }
-
 /**
- * Valida o email
+ * Valida o email.
+ * Através de expressões regulares do PHP.
  */
 function validarEmail($email) {
     $conta = "/^[a-zA-Z0-9\._-]+@";
     $domino = "[a-zA-Z0-9\._-]+.";
     $extensao = "([a-zA-Z]{2,4})$/";
     $pattern = $conta.$domino.$extensao;
-
     if (preg_match($pattern, $email)) {
         return true;
     }
     return false;
 }
-
-
+/**
+ * Exibe erros de um array pegando pela chave.
+ */
+function exibirErro($listaErros, $chave)
+{
+    if ( isset($listaErros[$chave]) && $listaErros[$chave]) {
+        return '<span class="text-danger">' . $listaErros[$chave] . '</span>';
+    }
+    return '';
+}
 ?>

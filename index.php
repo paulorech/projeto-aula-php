@@ -1,10 +1,10 @@
 <?php
 include "config.php";
 ?>
-<h1>Index do Projeto Aula PHP</h1>
 
-<h2> Subtítulo </h2>
+<h1>Index do projeto-aula-php</h1>
 
-<script type='text/javascript'>
-   window.location.href = '/modulo-cidade/cadastro-cidade.php';
+<h2>Subtitulo</h2>
+<script>
+window.location.href = '/modulo-cidade/';
 </script>
