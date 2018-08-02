@@ -22,7 +22,7 @@ include "../comum/migalhas.php";
 					<div class="form-row ">
 						<div class="col-md-8">
 							<label for="nome">Nome</label>
-							<input class="form-control" name="nome" id="nome" placeholder="Nome da cidade" type="text" />
+							<input class="form-control" name="nome" id="nome" placeholder="Nome da cidade" type="text" value="" />
 							<?php
 							/* Validação do input nome (este codigo foi passado para a função exibirErro) */
 							if ( isset($listaErros['nome']) && $listaErros['nome'] ) {
@@ -56,7 +56,9 @@ include "../comum/migalhas.php";
 					<div class="form-row">
 						<div class="col-md-12">
 							<button class="btn btn-success" type="submit">Salvar</button>
-							
+							<a href="/modulo-cidade/">
+								<button type="button" class= btn btn-default>Cancelar</button>
+							</a>
 							<?php if (isset($mensagemSucesso) && $mensagemSucesso) { ?>
 								<span class="text-success"> <?php echo $mensagemSucesso; ?> </span>
 							<?php } ?>

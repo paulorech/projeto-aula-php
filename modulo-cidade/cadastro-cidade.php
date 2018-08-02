@@ -18,6 +18,18 @@ function validarFormularioSimples($post)
 $listaUf = select_db("SELECT id, nome, sigla FROM uf;");
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $listaErros = [];
+
+    if (isset($_GET['edit']) && isset($_GET['id'])
+     && $_GET['edit'] == '1' && $_GET['id']) {
+
+        $cidade = select_one_db("SELECT id, nome, uf_id")
+     }
+
+
+
+
+
+
     include "cadastro-view.php";
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo "Formulario enviado <br>";
