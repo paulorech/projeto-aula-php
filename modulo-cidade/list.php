@@ -18,6 +18,7 @@ include '../comum/side-menu.php';
         </div>
         <?php
     }
+
     if ($listaErros) {
         ?>
         <div class="alert alert-danger">
@@ -25,11 +26,21 @@ include '../comum/side-menu.php';
         </div>
         <?php
     }
-    
+    /*
+    if (isset($_SESSION['msg_sucesso']) && $_SESSION['msg_sucesso']) {
+        
+        <div class="alert alert-success">
+            <?php echo $_SESSION['msg_sucesso']; ?>
+        </div>
+        
+        unset($_SESSION['msg_sucesso']);
+    }
+    */
+
     ?>
     <a href="/modulo-cidade/cadastro-cidade.php">
-<button class="btn btn-default"> Nova Cidade </button>
-</a>
+        <button class="btn btn-default">Nova Cidade</button>
+    </a>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -46,9 +57,9 @@ include '../comum/side-menu.php';
                     <td><?php echo $cidade->cidade_nome; ?></td>
                     <td><?php echo "{$cidade->uf_nome} ({$cidade->uf_sigla})"; ?></td>
                     <td>
-                    <a href="<?php echo "/modulo-cidade/cadastro-cidade.php?edit=1&id={$cidade->cidade_id}";?>">
-                        <button type="button" class="btn btn-primary">Editar</button>
-                    </a>
+                        <a href="<?php echo "/modulo-cidade/cadastro-cidade.php?edit=1&id={$cidade->cidade_id}"; ?>">
+                            <button type="button" class="btn btn-primary">Editar</button>
+                        </a>
                         <button class="btn btn-danger" data-delete-message="<?php echo "Deseja deletar a cidade {$cidade->cidade_nome} ?"; ?>" data-delete-url="<?php echo "/modulo-cidade?delete=1&id={$cidade->cidade_id}"; ?>"  onclick="deletarRegistro(this);">
                             <i class="fa fa-remove"></i>
                         </button>
@@ -65,6 +76,7 @@ include '../comum/side-menu.php';
 <script type="text/javascript">
 /*
 function deletarRegistro(id) {
+
     var ok = confirm("Deseja deletar o registro ID = " + id + " ?");
     if (ok) {
         window.location.href = "/modulo-cidade?delete=1&id=" + id;

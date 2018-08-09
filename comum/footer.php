@@ -28,9 +28,34 @@
 <script src="<?php echo $SITE_URL . "/static/vendor/jquery/jquery.min.js"; ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/vendor/bootstrap/js/bootstrap.bundle.min.js"; ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/vendor/jquery-easing/jquery.easing.min.js"; ?>"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+<script src="<?php echo $SITE_URL . "/static/vendor/jquery.mask.min.js"></script>
 <script src="<?php echo $SITE_URL . "/static/js/sb-admin.min.js"; ?>"></script>
+<script src="<?php echo $SITE_URL . "/static/vendor/bootstrap-notify.js" ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/js/home.js"; ?> "></script>
+
 <?php /* SCRIPTS FINAIS */ ?>
+
+<?php 
+/* SCRIPTS DO NOTIFY para exibir mensagens de sucesso */
+if (isset($_SESSION['msg_sucesso']) && $_SESSION['msg_sucesso']) {
+  ?>
+  <script type="text/javascript">
+    exibirAlerta(<?php echo json_encode($_SESSION['msg_sucesso']); ?>);
+  </script>
+  <?php
+  unset($_SESSION['msg_sucesso']);
+}
+
+/* SCRIPTS DO NOTIFY */
+if (isset($_SESSION['msg_erro']) && $_SESSION['msg_erro']) {
+  ?>
+  <script type="text/javascript">
+    exibirAlerta(<?php echo json_encode($_SESSION['msg_erro']); ?>);
+  </script>
+  <?php
+  unset($_SESSION['msg_erro']);
+}
+
+?>
 </body>
 </html>

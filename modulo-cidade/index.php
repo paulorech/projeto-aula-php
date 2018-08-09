@@ -1,8 +1,12 @@
 <?php
+
 include '../config.php';
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $listaErros = [];
     $mensagemSucesso = "";
+
+
     if (isset($_GET['delete']) && isset($_GET['id'])
         && $_GET['delete'] == '1' && $_GET['id']) {
         
@@ -13,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $listaErros['delete'] = "Erro ao remover o cidade.";
         }
     }
+
     // Deleta o registro se receber os parametros delete=1
     // E id=<id do registro a ser deletado>
     /* // CODIGO SEPARADO NA FUNCAO deletarRegistro()
@@ -21,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         
         $lista = select_db("SELECT id, nome FROM cidade WHERE id = " . $_GET['id']);
         if (count($lista) > 0 && $lista[0]->id) {
+
             $deletado = delete_db("DELETE FROM cidade WHERE id = " . $_GET['id']);
             if ($deletado) {
                 $mensagemSucesso = "Cidade {$lista[0]->nome} removida com sucesso.";
@@ -30,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
     }
     */
+
     // Fazer a busca das cidades e exibir a pagina list.php
     $listaCidades = select_db("
         SELECT 
@@ -44,6 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         ORDER BY 
             A.id ASC;
     ");
+
     include "list.php";
+
 }
+
+
 ?>

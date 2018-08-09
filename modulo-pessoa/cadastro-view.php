@@ -1,185 +1,105 @@
 <?php
-
-
-$listaCidades = [
-	'RS' => [
-		'Caxias do Sul',
-		'Porto Alegre',
-	],
-	'SC' => [
-		'Florianópolis',
-		'Lages'
-	],
-	'PR' => [
-		'Curitiba',
-		'Cascavel',
-	]
-];
-
+include "../comum/head.php";
+include "../comum/side-menu.php";
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<title>Meu Site</title>
-
-	<!-- Bootstrap core CSS-->
-	<link href="<?php echo $SITE_URL . "/static/vendor/bootstrap/css/bootstrap.css"; ?>" rel="stylesheet" type="text/css">
-	<!-- Custom fonts for this template-->
-	<link href="<?php echo $SITE_URL . "/static/vendor/font-awesome/css/font-awesome.css"; ?>" rel="stylesheet" type="text/css">
-	<!-- Custom styles for this template-->
-	<link href="<?php echo $SITE_URL . "/static/css/sb-admin.css" ?>" rel="stylesheet">
-</head>
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
-
-<?php /* INICIO MENU PRINCIPAL */ ?>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index.html">Start Bootstrap</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link" href="/">
-                        <i class="fa fa-fw fa-user"></i>
-                        <span class="nav-link-text">Cadastro de Pessoas</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link" href="/">
-                        <i class="fa fa-fw fa-list"></i>
-                        <span class="nav-link-text">Lista de Pessoas</span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul class="navbar-nav sidenav-toggler">
-                <li class="nav-item">
-                    <a class="nav-link text-center" id="sidenavToggler">
-                        <i class="fa fa-fw fa-angle-left"></i>
-                    </a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fa fa-fw fa-sign-out"></i>Sair</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <?php /* FIM MENU PRINCIPAL */ ?>
-
+<?php /* INICIO CONTEUDO */ ?>
 <div class="content-wrapper">
 	<div class="container-fluid">
 
-		<?php /* MIGALHAS */ ?>
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item">
-				<a href="#">Home</a>
-			</li>
-		</ol>
+		<?php
+		include "../comum/migalhas.php";
+		?>
 
 	<div class="card">
 		<div class="card-header">
-        	<i class="fa fa-user"></i> Cadastro de Pessoa
+        	<i class="fa fa-user"></i>
+			<?php if (isset($uf)) {
+				echo "Alterar pessoa: {$uf->nome}";
+			} else {
+				echo "Cadastrar Pessoa";
+			}
+			?>
 		</div>
 
 		<div class="card-body">
-
 			<form action="<?php echo $SITE_URL . "/modulo-pessoa/cadastro-pessoa.php"; ?>" id="form-cadastro" method="POST">
+				<!-- O input hidden "id" serve para enviar o ID do estado que 
+					estamos editando para o PHP saber qual registro ele precisa 
+					alterar. 
+				-->
+				<?php if (isset($uf)) { ?>
+					<input type="hidden" name="id" value="<?php echo $uf->id; ?>" />
+				<?php } ?>
 
 				<div class="form-group">
 					<div class="form-row ">
 						<div class="col-md-6">
-							<label for="nome">Nome completo</label>
-							<input class="form-control" name="nome" id="nome" placeholder="Nome completo" type="text" />
-							<?php
-							/* Validação do input nome (este codigo foi passado para a função exibirErro) */
-							if ( isset($listaErros['nome']) && $listaErros['nome'] ) {
-								?>
-								<span class="text-danger"><?php echo $listaErros['nome']; ?></span>
-								<?php
-							}
-							?>
+							<label for="nome">Nome</label>
+							<input class="form-control" name="nome" id="nome" placeholder="Primeiro nome" type="text" value="<?php echo (isset($uf)) ? $pessoa->primeiro_nome : ''; ?>" />
+							<?php echo exibirErro($listaErros, 'nome'); ?>
+						</div>
+						<div class="col-md-6">
+							<label for="segundo_nome">Sobrenome</label>
+							<input type="text" class="form-control" name="sobrenome" id="sobrenome" value="<?php echo (isset($uf)) ? $pessoa->segundo_nome : ''; ?>" placeholder="Sobrenome" />
+							<?php echo exibirErro($listaErros, 'sigla'); ?>
 						</div>
 						<div class="col-md-6">
 							<label for="email">Email</label>
-							<input class="form-control" name="email" id="email" placeholder="Email" type="text" />
-							<?php echo exibirErro($listaErros, 'email'); ?>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="form-row">
-						<div class="col-md-6">
-							<label>Sexo</label>
-							<div class="radio">
-								<label>
-									<input name="sexo" id="sexo_masculino" value="M" type="radio"> Masculino
-									Masculino
-								</label>
-							</div>
-							<div class="radio">
-								<label>
-									<input name="sexo" id="sexo_feminino" value="F" type="radio"> Feminino
-									Feminino
-								</label>
-							</div>
-							<?php echo exibirErro($listaErros, 'sexo'); ?>
+							<input class="form-control" name="email" id="email" placeholder="Email" type="text" value="<?php echo (isset($uf)) ? $pessoa->email : ''; ?>" />
+							<?php echo exibirErro($listaErros, 'nome'); ?>
 						</div>
 						<div class="col-md-6">
-							<label for="data_nascimento">Data de Nascimento</label>
-							<input class="form-control" name="data_nascimento" id="data_nascimento" placeholder="__/__/____" type="text" />
-							<?php echo exibirErro($listaErros, 'data_nascimento'); ?>
+							<label for="cpf">CPF</label>
+							<input class="form-control" name="cpf" id="cpf" placeholder="CPF" type="text" value="<?php echo (isset($uf)) ? $pessoa->cpf : ''; ?>" />
+							<?php echo exibirErro($listaErros, 'nome'); ?>
 						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="form-row">
+						<div class="col-md-6">
+							<label for="endereco">Endereço</label>
+							<input class="form-control" name="endereco" id="endereco" placeholder="Endereço" type="text" value="<?php echo (isset($uf)) ? $pessoa->endereco : ''; ?>" />
+							<?php echo exibirErro($listaErros, 'nome'); ?>
+						</div>
+						<div class="col-md-6">
+							<label for="bairro">Bairro</label>
+							<input class="form-control" name="bairro" id="bairro" placeholder="Bairro" type="text" value="<?php echo (isset($uf)) ? $pessoa->bairro : ''; ?>" />
+							<?php echo exibirErro($listaErros, 'nome'); ?>
+						</div>
+						<div class="col-md-6">
+							<label for="endereco">Número</label>
+							<input class="form-control" name="numero" id="numero" placeholder="Número da residência" type="text" value="<?php echo (isset($uf)) ? $pessoa->numero : ''; ?>" />
+							<?php echo exibirErro($listaErros, 'nome'); ?>
+						</div>
+						<div class="col-md-6">
+							<label for="cep">CEP</label>
+							<input class="form-control" name="cep" id="cep" placeholder="CEP do Endereço" type="text" value="<?php echo (isset($uf)) ? $pessoa->cep : ''; ?>" />
+							<?php echo exibirErro($listaErros, 'nome'); ?>
+						</div>
 						<div class="col-md-6">
 							<label for="uf">Estado</label>
 							<select class="form-control" name="uf" id="uf" >
 								<option value="">Selecione um estado</option>
 								<?php
-								// ForEach
 								foreach ($listaUf as $uf) {
-									echo "<option value=\"" . $uf->id . "\">" . $uf->nome . "</option>";
-								}
-
-								// For tradicional
-								/*for ($i=0; $i < count($listaUfs); $i++) {
-									echo "<option>" . $listaUfs[$i] . "</option>";
-								}*/
+									$checked = '';
+									if (isset($cidade) && $cidade->uf_id == $uf->id) {
+										$checked = "selected";
+									}
+									echo "<option {$checked} value=\"{$uf->id}\"> {$uf->nome} ({$uf->sigla})</option>";
+									}
 								?>
 							</select>
 							<?php echo exibirErro($listaErros, 'uf'); ?>
+							
 						</div>
 						<div class="col-md-6">
-							<label for="cidade">Cidade</label>
-							<select class="form-control" name="cidade" id="cidade">
-								<option value="">Selecione uma cidade</option>
-								<?php
-								foreach($listaCidades as $siglaUf => $listaNomesCidades) {
+							<label for="data_nascimento">Data de Nascimento</label>
+							<input class="form-control" name="data_nascimento" id="data_nascimento" placeholder="Data de Nascimento" type="text" value="<?php echo (isset($uf)) ? $pessoa->data_nascimento : ''; ?>" />
+							<?php echo exibirErro($listaErros, 'nome'); ?>
 
-									foreach($listaNomesCidades as $nomeCidade) {
-										echo "<option value='$nomeCidade'  data-uf='$siglaUf'>" . $nomeCidade . "</option>";
-									}
-
-								}
-								?>
-							</select>
-							<?php echo exibirErro($listaErros, 'cidade'); ?>
+						</div>
+						<div class="col-md-6">
+							<label for="tipo">Tipo</label>
+							<input class="form-control" name="tipo" id="tipo" placeholder="Tipo" type="text" value="<?php echo (isset($uf)) ? $pessoa->tipo : ''; ?>" />
+							<?php echo exibirErro($listaErros, 'nome'); ?>
 						</div>
 					</div>
 				</div>
@@ -188,6 +108,18 @@ $listaCidades = [
 					<div class="form-row">
 						<div class="col-md-12">
 							<button class="btn btn-success" type="submit">Salvar</button>
+							<a href="/modulo-estado/">
+								<button class="btn btn-default" type="button">Cancelar</button>
+							</a>
+							<?php if (isset($mensagemSucesso) && $mensagemSucesso) { ?>
+								<span class="text-success"><?php echo $mensagemSucesso; ?></span>
+							<?php } ?>
+							
+							<?php
+								if (isset($mensagemErro) && $mensagemErro) {
+									echo '<span class="text-danger">' . $mensagemErro . '</span>';
+								}
+							?>
 						</div>
 					</div>
 				</div>
@@ -197,43 +129,8 @@ $listaCidades = [
 
 	</div>
 </div>
+<?php /* FIM CONTEUDO */ ?>
 
-<footer class="sticky-footer">
-	<div class="container">
-		<div class="text-center">
-			<small>Meu Site 2018</small>
-		</div>
-	</div>
-</footer>
-
-<!-- Modal -->
-<div class="modal fade" id="modalRemover" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="modalRemoverTitle">Remover registro</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			</div>
-			<div class="modal-body">
-
-			</div>
-			<div class="modal-footer">
-				<form method="post" class="modal-form" action="">
-					<input type="hidden" name="id" class="input-id" value="" />
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-					<button type="submit" class="btn btn-danger btn-remover">Sim, remover</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<script src="<?php echo $SITE_URL . "/static/vendor/jquery/jquery.min.js"; ?>"></script>
-<script src="<?php echo $SITE_URL . "/static/vendor/bootstrap/js/bootstrap.bundle.min.js"; ?>"></script>
-<script src="<?php echo $SITE_URL . "/static/vendor/jquery-easing/jquery.easing.min.js"; ?>"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
-<script src="<?php echo $SITE_URL . "/static/js/sb-admin.min.js"; ?>"></script>
-<script src="<?php echo $SITE_URL . "/static/js/home.js"; ?> "></script>
-	
-</body>
+<?php
+include "../comum/footer.php";
+?>

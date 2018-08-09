@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // Inclui arquivo de configuração e metodos de conexão com banco de dados.
 include 'db.php';
@@ -17,7 +18,6 @@ ini_set('display_startup_erros', 1);
 error_reporting(E_ALL);
 
 $SITE_URL = 'http://aula.com';
-
 ?>
 
 
