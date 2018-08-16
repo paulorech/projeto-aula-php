@@ -32,13 +32,13 @@ include "../comum/side-menu.php";
 				<?php } ?>
 				
 					<div class="form-row ">
-						</div>
+						<div class="col-md-6">
 							<label for="tipo_professor">Professor</label>
 							<input required name="tipo" id="tipo_professor" type="radio" value="1">
 							<label for="tipo_aluno">Aluno</label>
 							<input required name="tipo" id="tipo_aluno"  type="radio" value="2">
 							<?php echo exibirErro($listaErros, 'tipo'); ?>
-						
+						</div>
 					</div>
 				<div class="form-group">
 					<div class="form-row ">
@@ -63,7 +63,7 @@ include "../comum/side-menu.php";
 						</div>
 						<div class="col-md-6">
 							<label for="data_nascimento">Data de Nascimento</label>
-							<input required class="form-control" name="data_nascimento" id="data_nascimento" placeholder="__/__/____" type="text" value="<?php echo (isset($pessoa)) ? $pessoa->data_nascimento : ''; ?>" />
+							<input class="form-control datepicker" name="data_nascimento" id="data_nascimento" placeholder="__/__/____" type="text" autocomplete="disable" value="<?php echo (isset($pessoa)) ? $pessoa->data_nascimento : ''; ?>"  />
 							<?php echo exibirErro($listaErros, 'data_nascimento'); ?>
 						</div>
 					</div>
@@ -134,3 +134,12 @@ include "../comum/side-menu.php";
 <?php
 include "../comum/footer.php";
 ?>
+<!-- O JS abaixo é utilizado somente nesta tela -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.datepicker').datepicker({
+		format: 'dd/mm/yyyy',
+		language: 'pt-BR'
+	}).mask('00/00/0000');
+});
+</script>

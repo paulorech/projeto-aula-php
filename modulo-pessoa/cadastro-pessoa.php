@@ -1,23 +1,51 @@
 <?php
 include '../config.php';
-
 /**
  * Valida formulario simples
  */
-function validarFormulario($post) 
+function validarFormulario($post)
 {
+    // Recebemos uma data_nascimento no $post (no formato dd/mm/AAAA),
+    // separamos pelo delimitador '/' e validamos com o checkdate 
+    // (retorna false quando a data for invalida e true quando valida)
+    //$dataSeparada = explode('/', $post['data_nascimento']);
+    //checkdate($dataSeparada[1], $dataSeparada[0], $dataSeparada[2])
+    $listaCampos = [
+        'primeiro_nome' => "Primeiro nome obrigatório.",
+        'segundo_nome' => "Sobrenome obrigatório.",
+        'tipo' => "Selecione Professor ou Aluno",
+        'email' => "Email obrigatório.",
+        'data_nascimento' => "Data nascimento obrigatória.",
+        'endereco' => "Endereço obrigatório.",
+        'bairro' => "Bairro obrigatório.",
+        'numero' => "Número obrigatório.",
+        'cep' => "Cep obrigatório.",
+        'cidade' => "Cidade obrigatória.",
+        'cpf' => "CPF obrigatório.",
+        'sexo' => "Sexo obrigatório.",
+    ];
     $listaErros = [];
-
-    if (!isset($post['nome']) || !$post['nome'] ) {
-        $listaErros['nome'] = "Nome obrigatório.";
+    // Validação dos campos obrigatorios
+    foreach($listaCampos as $chaveCampo => $mensagemCampo) {
+        if (!isset($post[$chaveCampo]) || !$post[$chaveCampo] ) {
+            $listaErros[$chaveCampo] = $mensagemCampo;
+        }
     }
-
-
-
-
-    
+    if ( !isset($listaErros['cpf']) && $post['cpf'] && !validarCpf($post['cpf'])) {
+        $listaErros['cpf'] = "CPF inválido.";
+    }
+    if ( !isset($listaErros['email']) && $post['email'] && validarEmail($post['email'])) {
+        $listaErros['email'] = "Email inválido.";
+    }
+    if ( !isset($listaErros['data_nascimento']) && $post['data_nascimento']) {
+        $dataNascimento = DateTime::createFromFormat('d/m/Y H:i:s', $post['data_nascimento']." 00:00:00");
+        if (! $dataNascimento) {
+            $listaErros['data_nascimento'] = "Data nascimento inválida.";
+        }
+    }
     return $listaErros;
 }
+
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
