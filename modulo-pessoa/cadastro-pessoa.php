@@ -46,7 +46,7 @@ function validarFormulario($post)
     return $listaErros;
 }
 
-
+$listaUfs = select_db("SELECT id, nome, sigla FROM uf ORDER BY nome ASC;");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $listaErros = [];

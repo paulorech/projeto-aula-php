@@ -102,8 +102,14 @@ include "../comum/side-menu.php";
 							<label for="uf">Estado</label>
 							<select class="form-control" name="uf" id="uf" >
 								<option value="">Selecione um estado</option>
+								<?php 
+								foreach($listaUfs as $uf) {
+									echo "<option value=\"{$uf->id}\">{$uf->nome} ({$uf->sigla})</option>";
+								}
+								?>
 							</select>
 							<?php echo exibirErro($listaErros, 'uf'); ?>
+
 						</div>
 						<div class="col-md-6">
 							<label for="uf">Cidade</label>
@@ -134,12 +140,61 @@ include "../comum/side-menu.php";
 <?php
 include "../comum/footer.php";
 ?>
+</script>
+
+
 <!-- O JS abaixo é utilizado somente nesta tela -->
+
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.datepicker').datepicker({
 		format: 'dd/mm/yyyy',
 		language: 'pt-BR'
 	}).mask('00/00/0000');
+	$('#cpf').mask('000.000.000-00');
+	$('#cep').mask('00000-000');
+	$("#uf").on('change', function(){
+		var selectUf = $(this);
+		var ufId = selectUf.val();
+		if (ufId) {
+			// Executa funcao Ajax para buscar todas as cidades do estado selecionado
+			
+			var selectCidade = $('#cidade');
+			var options = '<option value=\"\">Selecione</option>';
+			selectUf.attr('disabled', true);
+			selectCidade
+				.attr('disabled', true)
+				.find('option:first')
+				.html('Buscando cidades...');
+			$.ajax({
+				url: '<?php echo $SITE_URL . "/modulo-pessoa/ajax.php"; ?>',
+				dataType: 'json',
+				data: {
+					uf_id: ufId
+				},
+				success: function(dados) {
+					if (dados.length > 0) {
+						for(var i=0; i < dados.length; i++) {
+							// Forma de preencher as cidades mais ineficiente.
+							//$("#cidade").append("<option value=\"" + dados[i].id + "\">" + dados[i].nome + "</option>")
+							options += "<option value=\"" + dados[i].id + "\">" + dados[i].nome + "</option>"
+						}
+					}
+				},
+				error: function(erro) {
+					console.log(erro);
+				}
+			}).always(function() {
+				selectCidade.html(options);
+				selectUf.attr('disabled', false);
+				selectCidade.attr('disabled', false);
+				if (options > 0) {
+					selectCidade.find('option:first').html('Selecione');
+				}
+			});
+			
+		}
+	});
 });
 </script>
