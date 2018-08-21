@@ -57,6 +57,26 @@ include "../comum/side-menu.php";
 				<div class="form-group">
 					<div class="form-row ">
 						<div class="col-md-6">
+							<label for="cpf">CPF</label>
+							<input class="form-control" name="cpf" id="cpf" placeholder="___.___.___-__" type="text" value="<?php echo (isset($pessoa)) ? $pessoa->cpf : ''; ?>"  />
+							<?php echo exibirErro($listaErros, 'cpf'); ?>
+						</div>
+						<div class="col-md-6">
+							Sexo:<br>
+							<label for="sexo_masculino">
+								<input name="sexo" id="sexo_masculino" type="radio" value="M" /> Masculino
+							</label>
+							<label for="sexo_feminino">
+								<input name="sexo" id="sexo_feminino" type="radio" value="F" /> Feminino
+							</label>
+							<br>
+							<?php echo exibirErro($listaErros, 'sexo'); ?>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="form-row ">
+						<div class="col-md-6">
 							<label for="email">Email</label>
 							<input required class="form-control" name="email" id="email" placeholder="Email" type="email" value="<?php echo (isset($pessoa)) ? $pessoa->email : ''; ?>" />
 							<?php echo exibirErro($listaErros, 'email'); ?>
@@ -72,7 +92,7 @@ include "../comum/side-menu.php";
 					<div class="form-row ">
 						<div class="col-md-6">
 							<label for="endereco">Endereço</label>
-							<input required class="form-control" name="endereco" id="endereco" placeholder="Endereço" type="text" value="<?php echo (isset($pessoa)) ? $pessoa->endereco : ''; ?>" />
+							<input required class="form-control" name="endereco" id="endereco" placeholder="Rua, logradouro" type="text" value="<?php echo (isset($pessoa)) ? $pessoa->endereco : ''; ?>" />
 							<?php echo exibirErro($listaErros, 'endereco'); ?>
 						</div>
 						<div class="col-md-6">

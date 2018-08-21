@@ -37,7 +37,7 @@ function d($valor)
  * Valida o email.
  * Através de expressões regulares do PHP.
  */
-function validarEmail($email) {
+/*function validarEmail($email) {
     $conta = "/^[a-zA-Z0-9\._-]+@";
     $domino = "[a-zA-Z0-9\._-]+.";
     $extensao = "([a-zA-Z]{2,4})$/";
@@ -48,6 +48,8 @@ function validarEmail($email) {
     }
     return false;
 }
+*/
+
 
 /**
  * Exibe erros de um array pegando pela chave.
@@ -106,7 +108,7 @@ function adicionarMascaraCpf($cpf)
 {
     return vsprintf('%s%s%s.%s%s%s.%s%s%s-%s%s', str_split($cpf));
 }
-/*
+
 function validarEmail($email)
 {
     $er = "/^(([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}){0,1}$/";
@@ -115,7 +117,7 @@ function validarEmail($email)
     } else {
         return false;
     }
-}*/
+}
 
 function validarCpf($cpf)
 {

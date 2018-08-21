@@ -34,13 +34,13 @@ function validarFormulario($post)
     if ( !isset($listaErros['cpf']) && $post['cpf'] && !validarCpf($post['cpf'])) {
         $listaErros['cpf'] = "CPF inválido.";
     }
-    if ( !isset($listaErros['email']) && $post['email'] && validarEmail($post['email'])) {
+    if ( !isset($listaErros['email']) && $post['email'] && !validarEmail($post['email'])) {
         $listaErros['email'] = "Email inválido.";
     }
     if ( !isset($listaErros['data_nascimento']) && $post['data_nascimento']) {
         $dataNascimento = DateTime::createFromFormat('d/m/Y H:i:s', $post['data_nascimento']." 00:00:00");
         if (! $dataNascimento) {
-            $listaErros['data_nascimento'] = "Data nascimento inválida.";
+            $listaErros['data_nascimento'] = "Data de nascimento inválida.";
         }
     }
     return $listaErros;
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     if (isset($_GET['edit']) && $_GET['edit'] == 1
         && isset($_GET['id']) && $_GET['id']) {
-            $uf = select_one_db("SELECT id, nome, sigla FROM uf WHERE id = {$_GET['id']};");
+            $pessoa = select_one_db("SELECT id, primeiro_nome, segundo_nome, cpf FROM pessoa WHERE id = {$_GET['id']};");
         }
 
     include "cadastro-view.php";
@@ -84,9 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         //$_SESSION['msg_sucesso'] = "Cidade {$_POST['nome']} alterada com sucesso.";
 
-        alertSuccess("Sucesso.", "Estado {$_POST['nome']} alterado com sucesso.");
+        alertSuccess("Sucesso.", "Pessoa {$_POST['nome']} alterada com sucesso.");
         
-        redirect("/modulo-estado/");
+        redirect("/modulo-pessoa/");
         
     } else {
 
@@ -100,8 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $mensagemSucesso = '';
         $mensagemErro = '';
 
-        if ($estadoId) {
-            $mensagemSucesso = "Estado cadastrado com sucesso.";
+        if ($pessoaId) {
+            $mensagemSucesso = "Pessoa cadastrada com sucesso.";
         } else {
             $mensagemErro = "Erro inesperado.";
         }

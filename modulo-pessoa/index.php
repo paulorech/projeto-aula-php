@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['delete']) && isset($_GET['id'])
         && $_GET['delete'] == '1' && $_GET['id']) {
         
-        $uf = select_one_db("SELECT nome FROM uf WHERE id={$_GET['id']};");
+        $pessoa = select_one_db("SELECT nome FROM pessoa WHERE id={$_GET['id']};");
         $quantidadeCidades = select_one_db("
             SELECT
                 count(id) AS count
@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         ");
         
         if ($quantidadeCidades->count == 0) {
-            $deletado = deletarRegistro($_GET['id'], 'uf');
+            $deletado = deletarRegistro($_GET['id'], 'pessoa');
         
             if ($deletado) {
-                alertSuccess("Sucesso", "Pessoa {$uf->nome} removido com sucesso.");
+                alertSuccess("Sucesso", " {$pessoa->primeiro_nome} removido com sucesso.");
             } else {
                 alertError('Atenção!', "Erro ao remover pessoa.");
             }
@@ -31,17 +31,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             alertError('Atenção!', "Existem {$quantidadeCidades->count} cidades para este estado. Remova todas as cidades antes de remover o estado.", 10000);
         }
         
-        redirect('/modulo-estado/');
+        redirect('/modulo-pessoa/');
     }
 
     // Fazer a busca das cidades e exibir a pagina list.php
-    $listaUfs = select_db("
+    $listaPessoas = select_db("
         SELECT 
             id,
-            nome,
-            sigla
-        FROM uf
-        ORDER BY uf.nome ASC;
+            primeiro_nome,
+            segundo_nome,
+            email, 
+            cpf, 
+            endereco, 
+            bairro,
+            numero, 
+            cep, 
+            tipo, 
+
+        FROM pessoa
+        ORDER BY pessoa.nome ASC;
     ");
     
     include "list.php";
