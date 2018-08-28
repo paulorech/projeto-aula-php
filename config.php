@@ -1,5 +1,11 @@
 <?php
 session_start();
+// Define o idioma padrão do PHP para Portugues do Brasil
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+
+// define o timezone (fuso horario) padrao do sistema, para o PHP.
+date_default_timezone_set('America/Sao_Paulo');
+
 
 // Inclui arquivo de configuração e metodos de conexão com banco de dados.
 include 'db.php';
@@ -18,6 +24,21 @@ ini_set('display_startup_erros', 1);
 error_reporting(E_ALL);
 
 $SITE_URL = 'http://aula.com';
+
+$uri = $_SERVER['REQUEST_URI'];
+
+// Validar LOGIN:
+if (isset($_COOKIE['login']) && $_COOKIE['login']) {
+    // Usuario logado
+    if (!$uri || $uri == '/') {
+        redirect("/modulo-pessoa/");
+    }
+} else {
+    // Manda para tela de login
+    if (!strpos($uri, '/login') == 0) {
+        redirect("/login/");
+    }
+}
 ?>
 
 

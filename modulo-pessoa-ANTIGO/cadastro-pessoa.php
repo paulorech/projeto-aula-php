@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     include "cadastro-view.php";
 
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    echo "Formulário enviado <br>";
+    echo "Formulario enviado <br>";
     
     // Utilizem o metodo validarFormularioSimples OU validarFormularioAvancado
     $listaErros = validarFormularioSimples($_POST);

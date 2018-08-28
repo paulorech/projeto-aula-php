@@ -1,4 +1,3 @@
-
 /* TABELA UF */
 CREATE TABLE uf (
     id int NOT NULL AUTO_INCREMENT,
@@ -83,26 +82,31 @@ Criar a chave estrangeira:
 ALTER TABLE pessoa ADD FOREIGN KEY (cidade_id) REFERENCES cidade(id);
 */
 
-/* TABELA PESSOA */
 
+
+/* TABELA PESSOA */
 CREATE TABLE pessoa (
   id int(11) NOT NULL AUTO_INCREMENT,
   primeiro_nome varchar(255) NOT NULL,
   segundo_nome varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
-  cpf varchar(11) NOT NULL UNIQUE,
+  cpf varchar(11) NOT NULL,
   endereco varchar(255) NOT NULL,
   bairro varchar(255) NOT NULL,
   numero varchar(255) NOT NULL,
   cep varchar(9) NOT NULL,
   cidade_id int NOT NULL,
-  data_nascimento timestamp NOT NULL,
-  tipo int(1) NOT NULL, /*1-professor, 2-aluno*/
-  data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
-  data_alteracao TIMESTAMP not NULL DEFAULT NOW(),
-
+  data_nascimento timestamp NOT NULL, /* timestamp= '1990-12-30 00:00:00' */
+  tipo int(1) NOT NULL, /* 1=Professor, 2=Aluno */
+  data_criacao timestamp NOT NULL DEFAULT NOW(),
+  data_alteracao timestamp NOT NULL DEFAULT NOW(),
+  
   PRIMARY KEY (id),
   UNIQUE KEY (email),
   UNIQUE KEY (cpf),
-  FOREIGN KEY pessoa_cidade_id(cidade_id) REFERENCES cidade(id) 
+  FOREIGN KEY pessoa_cidade_id (cidade_id) REFERENCES cidade(id)
 );
+
+
+/* Adiciona coluna SEXO na tabela pessoa com valor padrão 'M' */
+ALTER TABLE pessoa ADD COLUMN sexo varchar(1) NOT NULL DEFAULT 'M';

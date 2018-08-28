@@ -1,6 +1,10 @@
 # projeto-aula-php
 Projeto da aula de PHP na Flexxo.
 
+## Tema bootstrap utilizado
+https://startbootstrap.com/template-overviews/sb-admin/
+
+
 
 ## Criar o modulo-pessoa
 * Primeiro: apague a tabela pessoa caso exista:
@@ -30,6 +34,33 @@ DROP TABLE pessoa
   * cadastro;
   * edição;
   * deletar;
+
+
+# Como executar o projeto em outro PC (Windows)?
+* Instalar VS Code
+* Instalar GIT
+* Instalar Xampp
+* abrir o terminal do git no vs code e navegar para o htdocs:
+    cd /c/xampp/htdocs
+* Executar o git clone para baixar seu repositorio no git hub
+    git clone https://url-do-seu-repositorio
+* o git clone irá criar automaticamente a pasta do seu projeto.
+* Abra o VS code na pasta do seu projeto.
+* Atualize o httpd.conf do Apache adicionando as configurações do
+    nosso projeto aula.com
+* Atualize o hosts do windows adicionando a linha aula.com 
+    127.0.0.1 aula.com
+* Criar Banco de dados aula_php_db
+* Criar usuario do banco aula_php_user
+* Executar o SQL do banco de dados para criar todas as tabelas.
+
+* Extensões para o VS Code:
+  * Code Spell Checker
+  * Git History
+  * HTML CSS Support
+  * MySQL
+  * MySQL Syntax
+  &nbsp;
 
 
 

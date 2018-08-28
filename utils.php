@@ -37,7 +37,7 @@ function d($valor)
  * Valida o email.
  * Através de expressões regulares do PHP.
  */
-/*function validarEmail($email) {
+function validarEmail($email) {
     $conta = "/^[a-zA-Z0-9\._-]+@";
     $domino = "[a-zA-Z0-9\._-]+.";
     $extensao = "([a-zA-Z]{2,4})$/";
@@ -48,8 +48,6 @@ function d($valor)
     }
     return false;
 }
-*/
-
 
 /**
  * Exibe erros de um array pegando pela chave.
@@ -98,29 +96,36 @@ function alertError($titulo, $mensagem, $delay=3000, $icone='fa fa-warning') {
         'delay' => $delay,
     ];
 }
-function removerMascaraCpf($cpf)
+
+/**
+ * Verifica se a requisição é Ajax.
+ * Se for Ajax retorna true.
+ * Se não retorna false.
+ */
+function checkAjax() {
+    if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) 
+        && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+        return true;
+    }
+    return false;
+  }
+
+
+  
+function removerMascaraCpf($valor)
 {
     //return preg_replace(["(",")"," ","'","."], [''], $valor);
-    return preg_replace(["/\\D+/"], [''], $cpf);
+    return preg_replace(["/\\D+/"], [''], $valor);
 }
 
-function adicionarMascaraCpf($cpf)
+function adicionarMascaraCpf($valor)
 {
-    return vsprintf('%s%s%s.%s%s%s.%s%s%s-%s%s', str_split($cpf));
-}
-
-function validarEmail($email)
-{
-    $er = "/^(([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}){0,1}$/";
-    if (preg_match($er, $email)) {
-        return true;
-    } else {
-        return false;
-    }
+    return vsprintf('%s%s%s.%s%s%s.%s%s%s-%s%s', str_split($valor));
 }
 
 function validarCpf($cpf)
 {
+
     $cpf = str_pad(preg_replace('/[^0-9]/', '', $cpf), 11, '0', STR_PAD_LEFT); 
     //Verifica se nenhuma das sequências abaixo foi digitada, caso seja, retorna falso
     if ( strlen($cpf) != 11
@@ -149,18 +154,26 @@ function validarCpf($cpf)
         return true;
     }
 }
+
 /**
- * Verifica se a requisição é Ajax.
- * Se for Ajax retorna true.
- * Se não retorna false.
+ * Escapa todas as aspas simples (') e duplas (") da string 
+ *  recebida no parametro $valor.
  */
-function checkAjax() {
-    if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) 
-        && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
-        return true;
+function filtrarSql($valor) {
+
+    $valor = str_replace("'", "\'", $valor);
+    $valor = str_replace('"', '\"', $valor);
+    return $valor;
+}
+
+/**
+ * Percorre todas as chaves do $_POST para executar o metodo filtrarSql.
+ */
+function formatarPost($post) {
+
+    foreach($post as $chave => $valor) {
+        $post[$chave] = filtrarSql($valor);
     }
-    return false;
-  }
-
-
+    return $post;
+}
 ?>

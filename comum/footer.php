@@ -28,7 +28,7 @@
 <script src="<?php echo $SITE_URL . "/static/vendor/jquery/jquery.min.js"; ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/vendor/bootstrap/js/bootstrap.bundle.min.js"; ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/vendor/jquery-easing/jquery.easing.min.js"; ?>"></script>
-<script src="<?php echo $SITE_URL . "/static/vendor/jquery.mask.min.js"?>"></script>
+<script src="<?php echo $SITE_URL . "/static/vendor/jquery.mask.min.js"; ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/js/sb-admin.min.js"; ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/vendor/bootstrap-notify.js" ?>"></script>
 <script src="<?php echo $SITE_URL . "/static/vendor/datepicker/js/bootstrap-datepicker.min.js" ?>"></script>
@@ -57,7 +57,7 @@ if (isset($_SESSION['msg_erro']) && $_SESSION['msg_erro']) {
   <?php
   unset($_SESSION['msg_erro']);
 }
-
 ?>
+
 </body>
 </html>
